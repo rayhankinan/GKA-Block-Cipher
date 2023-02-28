@@ -1,5 +1,6 @@
-from ..RoundFunction import RoundFunction
-from ..KeyExpansion import KeyExpansion
+from RoundFunction import RoundFunction
+from KeyExpansion import KeyExpansion
+from Utils import bytes_xor
 
 
 class FeistelNetwork:
@@ -17,7 +18,7 @@ class FeistelNetwork:
 
             internal_key = self.key_expansion.get_internal_key(current_index)
             hash = self.round_function.get_hash(internal_key)
-            left, right = right, left ^ hash(right)
+            left, right = right, bytes_xor(left, hash(right))
 
             return self.encrypt(left + right, num_of_iteration, current_index + 1)
 
@@ -33,6 +34,6 @@ class FeistelNetwork:
                 num_of_iteration - current_index - 1
             )
             hash = self.round_function.get_hash(internal_key)
-            left, right = right, left ^ hash(right)
+            left, right = bytes_xor(right, hash(left)), left
 
-            return self.decrypt(content, num_of_iteration, current_index + 1)
+            return self.decrypt(left + right, num_of_iteration, current_index + 1)
