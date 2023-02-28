@@ -4,7 +4,7 @@ from FeistelNetwork import FeistelNetwork
 from Constants import NUMBER_OF_ITERATION
 
 if __name__ == "__main__":
-    key_expansion = KeyExpansion(b"key")
+    key_expansion = KeyExpansion(b"abcefghijklmnopq")
     round_function = RoundFunction()
     feistel_network = FeistelNetwork(round_function, key_expansion)
     content = b"abcefghijklmnopq"

@@ -1,5 +1,4 @@
 import sys
-from Constants import BYTES_LENGTH
 
 
 def bytes_xor(a: bytes, b: bytes) -> bytes:
