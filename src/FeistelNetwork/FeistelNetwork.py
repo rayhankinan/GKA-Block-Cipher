@@ -1,0 +1,2 @@
+class FeistelNetwork:
+    pass
