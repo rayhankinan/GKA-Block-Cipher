@@ -1,0 +1,2 @@
+class OperationMode:
+    pass
