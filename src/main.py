@@ -10,9 +10,7 @@ if __name__ == "__main__":
     content = b"abcefghijklmnopq"
 
     encrypted = feistel_network.encrypt(content, NUMBER_OF_ITERATION)
-    print()
     decrypted = feistel_network.decrypt(encrypted, NUMBER_OF_ITERATION)
-    print()
 
     print("Content: ", content)
     print("Encrypted: ", encrypted)
