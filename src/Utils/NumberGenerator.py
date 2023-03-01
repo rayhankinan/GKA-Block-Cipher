@@ -1,4 +1,4 @@
-from Constants import FIRST_PRIME, SECOND_PRIME
+from Constants import FIRST_PRIME, SECOND_PRIME, LARGE_PRIME, PRIMITIVE_ROOT
 
 
 def binary_exponentiation(a: int, b: int, m: int) -> int:
@@ -30,7 +30,7 @@ def lcm(a: int, b: int) -> int:
     return (a * b) // gcd(a, b)
 
 
-def generate_list(seed: int, n: int) -> list[int]:
+def generate_list_bbs(seed: int, n: int) -> list[int]:
     m = FIRST_PRIME * SECOND_PRIME
 
     list_of_random_int = [seed]
@@ -42,7 +42,21 @@ def generate_list(seed: int, n: int) -> list[int]:
     return list_of_random_int[1:]
 
 
-def generate_number(seed: int, index: int) -> int:
+def generate_list_bm(seed: int, n: int) -> list[int]:
+    list_of_random_int = [seed]
+    for i in range(n):
+        list_of_random_int.append(
+            binary_exponentiation(
+                PRIMITIVE_ROOT,
+                list_of_random_int[i],
+                LARGE_PRIME
+            )
+        )
+
+    return list_of_random_int[1:]
+
+
+def generate_number_bbs(seed: int, index: int) -> int:
     exponent = binary_exponentiation(
         2, index + 1, lcm((FIRST_PRIME - 1) * (SECOND_PRIME - 1))
     )
