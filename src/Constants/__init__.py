@@ -1,2 +1,1 @@
-from .BytesOperation import BYTES_LENGTH
-from .CipherOperation import NUMBER_OF_ITERATION
+from .CipherOperation import BYTES_LENGTH, NUMBER_OF_ITERATION, FIRST_PRIME, SECOND_PRIME
