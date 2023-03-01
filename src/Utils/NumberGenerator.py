@@ -31,7 +31,7 @@ def lcm(a: int, b: int) -> int:
 
 
 def generate_list_bbs(seed: int, n: int) -> list[int]:
-    # Blum-Blum-Shub Pseudo-Random Number Generator (Not Used)
+    # Blum-Blum-Shub Pseudo-Random Number Generator (Key Expansion)
     m = FIRST_PRIME * SECOND_PRIME
 
     list_of_random_int = [seed]
@@ -44,7 +44,7 @@ def generate_list_bbs(seed: int, n: int) -> list[int]:
 
 
 def generate_number_bbs(seed: int, index: int) -> int:
-    # Blum-Blum-Shub Pseudo-Random Number Generator
+    # Blum-Blum-Shub Pseudo-Random Number Generator (Key Expansion)
     exponent = binary_exponentiation(
         2, index + 1, lcm((FIRST_PRIME - 1), (SECOND_PRIME - 1))
     )
@@ -54,7 +54,7 @@ def generate_number_bbs(seed: int, index: int) -> int:
 
 
 def generate_list_bm(seed: int, n: int) -> list[int]:
-    # Blum-Micali Pseudo-Random Number Generator
+    # Blum-Micali Pseudo-Random Number Generator (Round Function)
     list_of_random_int = [seed]
     for i in range(n):
         list_of_random_int.append(
@@ -69,7 +69,7 @@ def generate_list_bm(seed: int, n: int) -> list[int]:
 
 
 def generate_permutation(content: bytes, seed: int) -> bytes:
-    # Fisher-Yates Shuffle Algorithm
+    # Fisher-Yates Shuffle Algorithm (Round Function)
     arr = bytearray(content)
     length = len(content)
     random_int = generate_list_bm(seed, length)
