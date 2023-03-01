@@ -18,6 +18,7 @@ class FeistelNetwork:
 
             internal_key = self.key_expansion.get_internal_key(current_index)
             hash = self.round_function.get_hash(internal_key)
+
             left, right = right, bytes_xor(left, hash(right))
 
             return self.encrypt(left + right, num_of_iteration, current_index + 1)
@@ -34,6 +35,7 @@ class FeistelNetwork:
                 num_of_iteration - current_index - 1
             )
             hash = self.round_function.get_hash(internal_key)
+
             left, right = bytes_xor(right, hash(left)), left
 
             return self.decrypt(left + right, num_of_iteration, current_index + 1)

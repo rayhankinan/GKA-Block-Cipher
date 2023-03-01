@@ -31,6 +31,7 @@ def lcm(a: int, b: int) -> int:
 
 
 def generate_list_bbs(seed: int, n: int) -> list[int]:
+    # Blum-Blum-Shub Pseudo-Random Number Generator (Not Used)
     m = FIRST_PRIME * SECOND_PRIME
 
     list_of_random_int = [seed]
@@ -43,6 +44,7 @@ def generate_list_bbs(seed: int, n: int) -> list[int]:
 
 
 def generate_list_bm(seed: int, n: int) -> list[int]:
+    # Blum-Micali Pseudo-Random Number Generator
     list_of_random_int = [seed]
     for i in range(n):
         list_of_random_int.append(
@@ -57,8 +59,9 @@ def generate_list_bm(seed: int, n: int) -> list[int]:
 
 
 def generate_number_bbs(seed: int, index: int) -> int:
+    # Blum-Blum-Shub Pseudo-Random Number Generator
     exponent = binary_exponentiation(
-        2, index + 1, lcm((FIRST_PRIME - 1) * (SECOND_PRIME - 1))
+        2, index + 1, lcm((FIRST_PRIME - 1), (SECOND_PRIME - 1))
     )
     result = binary_exponentiation(seed, exponent, FIRST_PRIME * SECOND_PRIME)
 
