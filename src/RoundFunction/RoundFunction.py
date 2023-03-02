@@ -16,7 +16,7 @@ class RoundFunction:
         content = bytearray(content)
         for i in range(len(content)):
             left, right = content[i] >> 4, content[i] & 0x0F
-            new_int = s_box[left][right]
+            new_int = s_box[left*16 + right] % 256
             newbyte = new_int.to_bytes(1, sys.byteorder)
             content[i] = newbyte[0]
 

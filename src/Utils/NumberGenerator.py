@@ -67,21 +67,13 @@ def generate_list_bm(seed: int, n: int) -> list[int]:
 
     return list_of_random_int[1:]
 
-def generate_list_lcg(seed: int):
+def generate_list_lcg(seed: int, n = SUBSTITUTION_BIT) -> list[int]:
     # Linear Congruential Generator (create s-box)
-    size = int(2**SUBSTITUTION_BIT)
-    sqrt_size = int(size**0.5)
-
     list_of_random_int = [seed]
-    for i in range(size - 1):
+    for i in range(n - 1):
         list_of_random_int.append(
             (list_of_random_int[i] * MULTIPLIER_LCG + INCREMENT_LCG) % MODULUS_LCG
         )
-
-    for i in range(size):
-        list_of_random_int[i] = list_of_random_int[i] % size
-
-    list_of_random_int = [list_of_random_int[i:i+sqrt_size] for i in range(0, len(list_of_random_int), sqrt_size)]
 
     return list_of_random_int
 

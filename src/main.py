@@ -7,7 +7,7 @@ if __name__ == "__main__":
     key_expansion = KeyExpansion(b"abcefghijklmnopq")
     round_function = RoundFunction()
     feistel_network = FeistelNetwork(round_function, key_expansion)
-    content = b"kinankerenbanget"
+    content = b"linankerenbanget"
 
     encrypted = feistel_network.encrypt(content, NUMBER_OF_ITERATION)
     decrypted = feistel_network.decrypt(encrypted, NUMBER_OF_ITERATION)
