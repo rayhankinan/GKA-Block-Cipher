@@ -7,6 +7,9 @@ class KeyExpansion:
     def __init__(self, external_key: bytes) -> None:
         self.external_key = external_key
 
+    def get_external_key(self) -> bytes:
+        return self.external_key
+
     def get_internal_key(self, index: int) -> bytes:
         int_external_key = int.from_bytes(self.external_key, sys.byteorder)
         int_internal_key = generate_number_bbs(int_external_key, index)
