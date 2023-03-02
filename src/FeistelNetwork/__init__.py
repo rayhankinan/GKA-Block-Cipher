@@ -1,1 +1,1 @@
-from .FeistelNetwork import FeistelNetwork
+from .FeistelNetwork import *

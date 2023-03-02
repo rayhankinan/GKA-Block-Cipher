@@ -1,1 +1,1 @@
-from .OperationMode import OperationMode
+from .OperationMode import *

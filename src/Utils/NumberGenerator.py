@@ -1,4 +1,6 @@
-from Constants import FIRST_PRIME, SECOND_PRIME, LARGE_PRIME, PRIMITIVE_ROOT, SUBSTITUTION_BIT, MULTIPLIER_LCG, INCREMENT_LCG, MODULUS_LCG
+import math
+import sys
+from Constants import FIRST_PRIME, SECOND_PRIME, SUBSTITUTION_BIT, MULTIPLIER_LCG, INCREMENT_LCG, MODULUS_LCG
 
 
 def binary_exponentiation(a: int, b: int, m: int) -> int:
@@ -53,36 +55,38 @@ def generate_number_bbs(seed: int, index: int) -> int:
     return result
 
 
-def generate_list_bm(seed: int, n: int) -> list[int]:
-    # Blum-Micali Pseudo-Random Number Generator (Round Function)
+def generate_list_lcg(seed: int, n: int) -> list[int]:
+    # Linear Congruential Generator (Round Function)
     list_of_random_int = [seed]
     for i in range(n):
-        list_of_random_int.append(
-            binary_exponentiation(
-                PRIMITIVE_ROOT,
-                list_of_random_int[i],
-                LARGE_PRIME
-            )
-        )
+        new_element = (list_of_random_int[i] * MULTIPLIER_LCG + INCREMENT_LCG)
+
+        list_of_random_int.append(new_element % MODULUS_LCG)
 
     return list_of_random_int[1:]
 
-def generate_list_lcg(seed: int, n = SUBSTITUTION_BIT) -> list[int]:
-    # Linear Congruential Generator (create s-box)
-    list_of_random_int = [seed]
-    for i in range(n - 1):
-        list_of_random_int.append(
-            (list_of_random_int[i] * MULTIPLIER_LCG + INCREMENT_LCG) % MODULUS_LCG
-        )
 
-    return list_of_random_int
+def generate_substitution(content: bytes, seed: int) -> bytes:
+    # Linear Congruential Generator (Round Function)
+    arr = bytearray(content)
+    length = len(content)
+    s_box = generate_list_lcg(seed, SUBSTITUTION_BIT)
+    s_box_size = int(math.sqrt(SUBSTITUTION_BIT))
+
+    for i in range(length):
+        left, right = arr[i] >> 4, arr[i] & 0x0F
+
+        new_int = s_box[left * s_box_size + right] % SUBSTITUTION_BIT
+        arr[i] = new_int
+
+    return bytes(arr)
 
 
 def generate_permutation(content: bytes, seed: int) -> bytes:
     # Fisher-Yates Shuffle Algorithm (Round Function)
     arr = bytearray(content)
     length = len(content)
-    random_int = generate_list_bm(seed, length)
+    random_int = generate_list_lcg(seed, length)
 
     for i in range(length - 1, 0, -1):
         j = random_int[i] % (i + 1)
