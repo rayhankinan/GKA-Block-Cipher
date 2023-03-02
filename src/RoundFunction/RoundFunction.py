@@ -12,11 +12,12 @@ class RoundFunction:
         # TODO: Definisikan hash function yang invertible
         int_internal_key = int.from_bytes(key, sys.byteorder)
         s_box = generate_list_lcg(int_internal_key)
-        # substitute each byte in content with the corresponding byte in s_box
+        s_box_size = int(len(s_box)**0.5)
+
         content = bytearray(content)
         for i in range(len(content)):
             left, right = content[i] >> 4, content[i] & 0x0F
-            new_int = s_box[left*16 + right] % 256
+            new_int = s_box[left*s_box_size + right] % len(s_box)
             newbyte = new_int.to_bytes(1, sys.byteorder)
             content[i] = newbyte[0]
 
