@@ -1,4 +1,4 @@
-from Constants import FIRST_PRIME, SECOND_PRIME, LARGE_PRIME, PRIMITIVE_ROOT
+from Constants import FIRST_PRIME, SECOND_PRIME, LARGE_PRIME, PRIMITIVE_ROOT, SUBSTITUTION_BIT, MULTIPLIER_LCG, INCREMENT_LCG, MODULUS_LCG
 
 
 def binary_exponentiation(a: int, b: int, m: int) -> int:
@@ -66,6 +66,24 @@ def generate_list_bm(seed: int, n: int) -> list[int]:
         )
 
     return list_of_random_int[1:]
+
+def generate_list_lcg(seed: int):
+    # Linear Congruential Generator (create s-box)
+    size = int(2**SUBSTITUTION_BIT)
+    sqrt_size = int(size**0.5)
+
+    list_of_random_int = [seed]
+    for i in range(size - 1):
+        list_of_random_int.append(
+            (list_of_random_int[i] * MULTIPLIER_LCG + INCREMENT_LCG) % MODULUS_LCG
+        )
+
+    for i in range(size):
+        list_of_random_int[i] = list_of_random_int[i] % size
+
+    list_of_random_int = [list_of_random_int[i:i+sqrt_size] for i in range(0, len(list_of_random_int), sqrt_size)]
+
+    return list_of_random_int
 
 
 def generate_permutation(content: bytes, seed: int) -> bytes:
