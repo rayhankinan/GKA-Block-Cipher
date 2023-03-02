@@ -3,6 +3,9 @@ from RoundFunction import RoundFunction
 from FeistelNetwork import FeistelNetwork
 from Constants import NUMBER_OF_ITERATION
 
+from Utils import generate_list_bm
+import sys
+
 if __name__ == "__main__":
     key_expansion = KeyExpansion(b"abcefghijklmnopq")
     round_function = RoundFunction()
