@@ -70,6 +70,11 @@ def generate_permutation(content: bytes, seed: int) -> bytes:
     return bytes(arr)
 
 
+def generate_inverse_permutation(content: bytes, seed: int) -> bytes:
+    # TODO: Implement this
+    pass
+
+
 def generate_substitution(content: bytes, seed: int) -> bytes:
     # Fisher-Yates Shuffle Algorithm (Round Function)
     arr = bytearray(content)
