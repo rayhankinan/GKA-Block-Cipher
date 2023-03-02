@@ -72,9 +72,7 @@ def generate_permutation(content: bytes, seed: int) -> bytes:
     # Fisher-Yates Shuffle Algorithm (Round Function)
     arr = bytearray(content)
     length = len(content)
-
-    # TODO: Ubah ini ke generate_list_bm jika algoritma sudah cukup bagus
-    random_int = generate_list_bbs(seed, length)
+    random_int = generate_list_bm(seed, length)
 
     for i in range(length - 1, 0, -1):
         j = random_int[i] % (i + 1)
