@@ -1,2 +1,2 @@
-from .BytesXOR import *
+from .BinaryOperation import *
 from .NumberGenerator import *

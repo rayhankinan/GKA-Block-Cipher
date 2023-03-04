@@ -1,6 +1,6 @@
 import math
-import sys
-from Constants import FIRST_PRIME, SECOND_PRIME, SUBSTITUTION_BIT, PRIMITIVE_ROOT, LARGE_PRIME
+from Constants import FIRST_PRIME, SECOND_PRIME, PRIMITIVE_ROOT, LARGE_PRIME, BYTES_LENGTH, SUBSTITUTION_BIT
+from Utils import access_bit, change_bit
 
 
 def binary_exponentiation(a: int, b: int, m: int) -> int:
@@ -90,3 +90,37 @@ def generate_substitution(content: bytes, seed: int) -> bytes:
         arr[i] = new_int
 
     return bytes(arr)
+
+
+def shuffle_bits(content: bytes, seed: int) -> bytes:
+    # Fisher-Yates Shuffle Algorithm (Round Function)
+    new_content = bytes(content)
+    random_int = generate_list_bm(seed, BYTES_LENGTH * 8)
+
+    for i in range(BYTES_LENGTH * 8 - 1, 0, -1):
+        j = random_int[i] % (i + 1)
+
+        first_bit = access_bit(new_content, i)
+        second_bit = access_bit(new_content, j)
+
+        new_content = change_bit(new_content, i, second_bit)
+        new_content = change_bit(new_content, j, first_bit)
+
+    return new_content
+
+
+def unsuffle_bits(content: bytes, seed: int) -> bytes:
+    # Fisher-Yates Shuffle Algorithm (Round Function)
+    new_content = bytes(content)
+    random_int = generate_list_bm(seed, BYTES_LENGTH * 8)
+
+    for i in range(1, BYTES_LENGTH * 8):
+        j = random_int[i] % (i + 1)
+
+        first_bit = access_bit(new_content, i)
+        second_bit = access_bit(new_content, j)
+
+        new_content = change_bit(new_content, i, second_bit)
+        new_content = change_bit(new_content, j, first_bit)
+
+    return new_content

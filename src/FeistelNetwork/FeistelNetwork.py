@@ -1,7 +1,7 @@
 import sys
 from RoundFunction import RoundFunction
 from KeyExpansion import KeyExpansion
-from Utils import bytes_xor, generate_permutation, generate_inverse_permutation
+from Utils import bytes_xor
 
 
 class FeistelNetwork:
