@@ -1,7 +1,7 @@
 import sys
 from typing import Callable
 from Constants.CipherOperation import SUBSTITUTION_BIT
-from Utils import generate_permutation, generate_substitution
+from Utils import shuffle_bytes, substitute_bytes
 
 
 class RoundFunction:
@@ -13,7 +13,7 @@ class RoundFunction:
         # TODO: Definisikan hash function yang invertible
         int_internal_key = int.from_bytes(key, sys.byteorder)
 
-        return generate_permutation(generate_substitution(content, int_internal_key), int_internal_key)
+        return shuffle_bytes(substitute_bytes(content, int_internal_key), int_internal_key)
 
     def get_hash(self, key: bytes) -> Callable[[bytes], bytes]:
         return lambda content: self.hash_function(key, content)

@@ -57,20 +57,7 @@ def generate_list_bm(seed: int, n: int) -> list[int]:
     return list_of_random_int[1:]
 
 
-def generate_permutation(content: bytes, seed: int) -> bytes:
-    # Fisher-Yates Shuffle Algorithm (Round Function)
-    arr = bytearray(content)
-    length = len(content)
-    random_int = generate_list_bm(seed, length)
-
-    for i in range(length - 1, 0, -1):
-        j = random_int[i] % (i + 1)
-        arr[i], arr[j] = arr[j], arr[i]
-
-    return bytes(arr)
-
-
-def generate_substitution(content: bytes, seed: int) -> bytes:
+def substitute_bytes(content: bytes, seed: int) -> bytes:
     # Fisher-Yates Shuffle Algorithm (Round Function)
     arr = bytearray(content)
     length = len(content)
@@ -88,6 +75,19 @@ def generate_substitution(content: bytes, seed: int) -> bytes:
 
         new_int = s_box[left * s_box_size + right] % SUBSTITUTION_BIT
         arr[i] = new_int
+
+    return bytes(arr)
+
+
+def shuffle_bytes(content: bytes, seed: int) -> bytes:
+    # Fisher-Yates Shuffle Algorithm (Round Function)
+    arr = bytearray(content)
+    length = len(content)
+    random_int = generate_list_bm(seed, length)
+
+    for i in range(length - 1, 0, -1):
+        j = random_int[i] % (i + 1)
+        arr[i], arr[j] = arr[j], arr[i]
 
     return bytes(arr)
 
