@@ -3,6 +3,7 @@ from RoundFunction import RoundFunction
 from FeistelNetwork import FeistelNetwork
 from Constants import NUMBER_OF_ITERATION, BYTES_LENGTH
 from OperationMode import OperationMode
+import time
 
 if __name__ == "__main__":
     key_expansion = KeyExpansion(b"abcefghijklmnopq")
@@ -39,10 +40,17 @@ if __name__ == "__main__":
 
     cipher = OperationMode(mode_code, iv, feistel_network)
 
+    time_encrypt_start = time.time()
     encrypted = cipher.encrypt(content, NUMBER_OF_ITERATION)
+    time_encrypt_end = time.time()
+    
+    time_decrypt_start = time.time()
     decrypted = cipher.decrypt(encrypted, NUMBER_OF_ITERATION)
+    time_decrypt_end = time.time()
 
 
     print("Content: ", content)
     print("Encrypted: ", encrypted)
+    print("Time encrypt: ", time_encrypt_end - time_encrypt_start, "s")
     print("Decrypted: ", decrypted)
+    print("Time decrypt: ", time_decrypt_end - time_decrypt_start, "s")
