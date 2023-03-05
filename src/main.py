@@ -6,10 +6,7 @@ from OperationMode import OperationMode
 import time
 
 if __name__ == "__main__":
-    key_expansion = KeyExpansion(b"abcefghijklmnopq")
-    round_function = RoundFunction()
-    feistel_network = FeistelNetwork(round_function, key_expansion)
-
+    key = b"abcdefghijklmnop"
     mode_code = "ECB"
     mode = int(input("Choose mode:\n1. ECB\n2. CBC\n3. CFB\n4. OFB\n5. CTR\n"))
 
@@ -29,12 +26,16 @@ if __name__ == "__main__":
 
     content = input("Input content: ").encode()
 
+    key_expansion = KeyExpansion(key)
+    round_function = RoundFunction()
+    feistel_network = FeistelNetwork(round_function, key_expansion)
+
     if (len(content) % BYTES_LENGTH != 0):
         content += b' ' * (BYTES_LENGTH - (len(content) % BYTES_LENGTH))
     
-    iv = b'abcdefghijklmnop'
+    iv = key
     if(mode_code == "CTR"):
-        iv = b'abcdefghijklmnop'[:BYTES_LENGTH//2]
+        iv = key[:BYTES_LENGTH//2]
     elif(mode_code == "ECB"):
         iv = b''
 
