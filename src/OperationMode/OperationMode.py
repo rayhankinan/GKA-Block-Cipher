@@ -15,7 +15,10 @@ class OperationMode:
         elif (mode == "ECB"):
             assert(len(external_key) == 0)
         else:
-            assert(len(external_key) == BYTES_LENGTH)
+            if (len(external_key) < BYTES_LENGTH):
+                self.external_key = self.external_key + (b'\x00' * (BYTES_LENGTH - len(self.external_key)))
+            elif (len(external_key) > BYTES_LENGTH):
+                self.external_key = self.external_key[:BYTES_LENGTH]
             
 
     def encrypt(self, content: bytes, num_of_iteration: int) -> bytes:
@@ -64,7 +67,8 @@ class OperationMode:
     
     # CBC: use external key as IV, and XOR it with the previous block
     def cbc_encrypt(self, content: bytes, num_of_iteration: int) -> bytes:
-        assert(len(content) % self.block_size == 0)
+        if (len(content) % self.block_size != 0):
+            content += b'\x00' * (self.block_size - len(content) % self.block_size)
         result = bytearray()
         current_xor = self.external_key
         for i in range(0, len(content), self.block_size):
