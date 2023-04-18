@@ -1,8 +1,8 @@
 from KeyExpansion import KeyExpansion
 from RoundFunction import RoundFunction
 from FeistelNetwork import FeistelNetwork
-from Constants import NUMBER_OF_ITERATION, BYTES_LENGTH
 from OperationMode import OperationMode
+from Constants import NUMBER_OF_ITERATION, BYTES_LENGTH
 import time
 
 if __name__ == "__main__":

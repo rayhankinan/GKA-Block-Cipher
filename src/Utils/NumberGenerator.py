@@ -94,7 +94,8 @@ def shuffle_bytes(content: bytes, seed: int) -> bytes:
 
 def shuffle_bits(content: bytes, seed: int) -> bytes:
     # Fisher-Yates Shuffle Algorithm (Round Function)
-    new_content = bytes(content)
+    # This assumes the input is already encoded as bytes
+    new_content = content
     random_int = generate_list_bm(seed, BYTES_LENGTH * 8)
 
     for i in range(BYTES_LENGTH * 8 - 1, 0, -1):
@@ -111,7 +112,8 @@ def shuffle_bits(content: bytes, seed: int) -> bytes:
 
 def unsuffle_bits(content: bytes, seed: int) -> bytes:
     # Fisher-Yates Shuffle Algorithm (Round Function)
-    new_content = bytes(content)
+    # This assumes the input is already encoded as bytes
+    new_content = content
     random_int = generate_list_bm(seed, BYTES_LENGTH * 8)
 
     for i in range(1, BYTES_LENGTH * 8):
