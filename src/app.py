@@ -3,7 +3,7 @@ from KeyExpansion import KeyExpansion
 from RoundFunction import RoundFunction
 from FeistelNetwork import FeistelNetwork
 from OperationMode import OperationMode
-from Constants import NUMBER_OF_ITERATION
+from Constants import NUMBER_OF_ITERATION, BYTES_LENGTH
 import base64
 
 class GKACipher:
@@ -32,6 +32,8 @@ def encrypt():
     message = request.json['message']
     key = key.encode()
     message = message.encode()
+    if len(message) % BYTES_LENGTH != 0:
+        message += b' ' * (BYTES_LENGTH - (len(message) % BYTES_LENGTH))
     cipher = GKACipher(key)
     encrypted = cipher.encrypt(message)
     return base64.b64encode(encrypted)
