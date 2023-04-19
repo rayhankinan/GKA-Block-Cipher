@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, jsonify, request
 from KeyExpansion import KeyExpansion
 from RoundFunction import RoundFunction
 from FeistelNetwork import FeistelNetwork
@@ -11,7 +11,7 @@ class GKACipher:
         self.key_expansion = KeyExpansion(key)
         self.round_function = RoundFunction()
         self.feistel_network = FeistelNetwork(self.round_function, self.key_expansion)
-        self.cipher = OperationMode("ECB", b'', self.feistel_network)
+        self.cipher = OperationMode("CBC", key, self.feistel_network)
 
     def encrypt(self, message):
         return self.cipher.encrypt(message, NUMBER_OF_ITERATION)
@@ -36,18 +36,20 @@ def encrypt():
         message += b' ' * (BYTES_LENGTH - (len(message) % BYTES_LENGTH))
     cipher = GKACipher(key)
     encrypted = cipher.encrypt(message)
-    return base64.b64encode(encrypted)
+    encrypted = base64.b64encode(encrypted)
+    encrypted = encrypted.decode()
+    return jsonify(ciphertext=encrypted)
 
 @app.route('/decrypt', methods=['POST'])
 def decrypt():
-    request.get_json()
-    key = request.json['key']
-    message = request.json['message']
+    key = request.form['key']
+    message = request.form['message']
     message = base64.b64decode(message)
     key = key.encode()
     cipher = GKACipher(key)
     decrypted = cipher.decrypt(message)
-    return decrypted.decode()
+    decrypted =  decrypted.decode()
+    return jsonify(ciphertext=decrypted)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
